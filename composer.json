@@ -1,0 +1,27 @@
+{
+  "name": "prestashop/demoproducts",
+  "description": "PrestaShop module installing demo products",
+  "homepage": "https://github.com/mickaelandrieu/demonstration",
+  "license": "AFL - Academic Free License (AFL 3.0)",
+  "authors": [
+    {
+      "name": "PrestaShop SA",
+      "email": "contact@prestashop.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "symfony/config": "^2.8",
+    "symfony/yaml": "^2.8"
+  },
+  "autoload": {
+    "psr-4": {"PrestaShop\\Demonstration\\": "src/Demonstration"},
+    "exclude-from-classmap": [
+      "src/Demonstration/Tests/"
+    ]
+  },
+  "config": {
+    "preferred-install": "dist"
+  },
+  "type": "prestashop-module"
+}

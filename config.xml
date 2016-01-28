@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+	<name>demonstration</name>
+	<displayName><![CDATA[Demonstration]]></displayName>
+	<version><![CDATA[0.1.0]]></version>
+	<description><![CDATA[This module install a complete Shop with demo data.]]></description>
+	<author><![CDATA[PrestaShop]]></author>
+	<tab><![CDATA[administration]]></tab>
+	<is_configurable>1</is_configurable>
+	<need_instance>1</need_instance>
+</module>
