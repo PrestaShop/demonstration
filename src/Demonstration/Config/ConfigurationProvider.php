@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2015 PrestaShop
+ * 2007-2015 PrestaShop.
  *
  * NOTICE OF LICENSE
  *
@@ -32,9 +32,9 @@ class ConfigurationProvider
 {
     public function processFromPath()
     {
-        $locator = new FileLocator(__DIR__. DIRECTORY_SEPARATOR .'..' . DIRECTORY_SEPARATOR . '..' .  DIRECTORY_SEPARATOR  .'..' . DIRECTORY_SEPARATOR .'config');
+        $locator = new FileLocator(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'config');
         $loader = new YamlConfigLoader($locator);
 
-        return $loader->load($locator->locate('products.yml'));
+        return $loader->load($locator->locate('config.yml'));
     }
 }

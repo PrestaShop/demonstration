@@ -1,6 +1,6 @@
 <?php
 /**
-* 2007-2015 PrestaShop
+* 2007-2015 PrestaShop.
 *
 * NOTICE OF LICENSE
 *
@@ -23,7 +23,6 @@
 *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 *  International Registered Trademark & Property of PrestaShop SA
 */
-
 $query = 'CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'demonstration` (
     `id_demonstration` int(11) NOT NULL AUTO_INCREMENT,
     `table_name` varchar(20) NOT NULL,

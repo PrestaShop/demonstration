@@ -1,6 +1,6 @@
 <?php
 /**
-* 2007-2015 PrestaShop
+* 2007-2015 PrestaShop.
 *
 * NOTICE OF LICENSE
 *
@@ -23,34 +23,37 @@
 *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 *  International Registered Trademark & Property of PrestaShop SA
 */
-namespace PrestaShop\Demonstration\Services;
+namespace PrestaShop\Demonstration;
 
 use PrestaShop\Demonstration\Config\ConfigurationProvider;
 
 final class DemoInstaller
 {
+    private $database;
 
-  public function __construct()
-  {
-  }
-
-  public function processConfiguration()
-  {
-      return (new ConfigurationProvider)->processFromPath();
-  }
-
-  public function install()
-  {
-
-  }
-
-  public function uninstall()
-  {
-    $trashEntities = Db::getInstance()->executeS('SELECT * FROM `'._DB_PREFIX_.'demonstration`');
-
-    foreach ($trashEntities as $entity) {
-      Db::getInstance()->delete($entity['table_name'], $entity['id_name'].' IN ('.$entity['ids'].')');
+    public function __construct()
+    {
+        $this->database = \Db::getInstance();
     }
-  }
+
+    public function processConfiguration()
+    {
+        return (new ConfigurationProvider())->processFromPath();
+    }
+
+    public function install()
+    {
+        $config = $this->processConfiguration();
+        dump($config);die;
+
+    }
+
+    public function uninstall()
+    {
+        $trashEntities = $this->database->executeS('SELECT * FROM `'._DB_PREFIX_.'demonstration`');
+
+        foreach ($trashEntities as $entity) {
+            $this->database->delete($entity['table_name'], $entity['id_name'].' IN ('.$entity['ids'].')');
+        }
+    }
 }
- ?>

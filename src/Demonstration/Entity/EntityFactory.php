@@ -25,10 +25,18 @@
  */
 namespace PrestaShop\Demonstration\Entity;
 
-class Product extends AbstractEntity
+class EntityFactory
 {
-    public function import()
+    public static function create($category)
     {
-        $yamlPath = self::FIXTURES_PATH.'products.yml';
+        switch($category) {
+            case 'products':
+                $entity = new \Product();
+            break;
+            default:
+                return;
+        }
+
+        return $entiy;
     }
 }

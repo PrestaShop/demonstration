@@ -1,6 +1,6 @@
 <?php
 /**
-* 2007-2015 PrestaShop
+* 2007-2015 PrestaShop.
 *
 * NOTICE OF LICENSE
 *
@@ -23,14 +23,13 @@
 *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 *  International Registered Trademark & Property of PrestaShop SA
 */
-
 if (!defined('_PS_VERSION_')) {
     exit;
 }
 
 require_once __DIR__.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
 
-class Demonstration extends Module
+class demonstration extends Module
 {
     protected $config_form = false;
 
@@ -42,7 +41,7 @@ class Demonstration extends Module
         $this->author = 'PrestaShop';
         $this->need_instance = 1;
 
-        /**
+        /*
          * Set $this->bootstrap to true if your module is compliant with bootstrap (PrestaShop 1.6)
          */
         $this->bootstrap = true;
@@ -59,13 +58,13 @@ class Demonstration extends Module
 
     /**
      * Don't forget to create update methods if needed:
-     * http://doc.prestashop.com/display/PS16/Enabling+the+Auto-Update
+     * http://doc.prestashop.com/display/PS16/Enabling+the+Auto-Update.
      */
     public function install()
     {
+        $demoInstaller = new \PrestaShop\Demonstration\DemoInstaller();
+        $demoInstaller->install();
 
-        $demoInstaller = new \PrestaShop\Demonstration\Services\DemoInstaller();
-        var_dump($demoInstaller->processConfiguration());die;
         return parent::install();
     }
 
