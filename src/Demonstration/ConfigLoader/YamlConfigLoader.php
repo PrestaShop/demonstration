@@ -27,12 +27,29 @@ namespace PrestaShop\Demonstration\ConfigLoader;
 
 use Symfony\Component\Config\Loader\FileLoader;
 use Symfony\Component\Yaml\Parser;
+use Symfony\Component\Yaml\Exception\ParseException;
+use \InvalidArgumentException;
 
 class YamlConfigLoader extends FileLoader
 {
+    private $yamlParser;
+
     public function load($resource, $type = null)
     {
-        return (new Parser())->parse(file_get_contents($resource));
+        $path = $this->locator->locate($resource);
+        $configuration = $this->loadFile($path);
+
+        if (isset($configuration['imports']) && is_array($configuration['imports'])) {
+            $imports = $configuration['imports'];
+
+            foreach($imports as $import) {
+                $path = $this->locator->locate($import['resource']);
+                $configuration = array_merge($configuration, $this->loadFile($path));
+            }
+
+            unset($configuration['imports']);
+        }
+        return $configuration;
     }
 
     public function supports($resource, $type = null)
@@ -41,5 +58,32 @@ class YamlConfigLoader extends FileLoader
             $resource,
             PATHINFO_EXTENSION
         );
+    }
+
+    protected function loadFile($file)
+    {
+        if (!class_exists('Symfony\Component\Yaml\Parser')) {
+            throw new RuntimeException('Unable to load YAML config files as the Symfony Yaml Component is not installed.');
+        }
+
+        if (!stream_is_local($file)) {
+            throw new InvalidArgumentException(sprintf('This is not a local file "%s".', $file));
+        }
+
+        if (!file_exists($file)) {
+            throw new InvalidArgumentException(sprintf('The service file "%s" is not valid.', $file));
+        }
+
+        if (null === $this->yamlParser) {
+            $this->yamlParser = new Parser();
+        }
+
+        try {
+            $configuration = $this->yamlParser->parse(file_get_contents($file));
+        } catch (ParseException $e) {
+            throw new InvalidArgumentException(sprintf('The file "%s" does not contain valid YAML.', $file), 0, $e);
+        }
+
+        return $configuration;
     }
 }

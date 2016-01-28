@@ -12,6 +12,7 @@
   "require": {
     "php": ">=5.4.0",
     "symfony/config": "^2.8",
+    "symfony/dependency-injection": "^2.8",
     "symfony/yaml": "^2.8"
   },
   "autoload": {

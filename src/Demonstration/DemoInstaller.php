@@ -26,34 +26,26 @@
 namespace PrestaShop\Demonstration;
 
 use PrestaShop\Demonstration\Config\ConfigurationProvider;
+use PrestaShop\Demonstration\Entity\EntityFactory;
 
 final class DemoInstaller
 {
-    private $database;
-
-    public function __construct()
+    public static function install()
     {
-        $this->database = \Db::getInstance();
+        foreach(ConfigurationProvider::processFromPath() as $section => $entities) {
+            foreach($entities as $properties) {
+                $entity = EntityFactory::createFromValues($section, $properties);
+                $entity->save();
+            }
+        }
     }
 
-    public function processConfiguration()
+    public static function uninstall()
     {
-        return (new ConfigurationProvider())->processFromPath();
-    }
-
-    public function install()
-    {
-        $config = $this->processConfiguration();
-        dump($config);die;
-
-    }
-
-    public function uninstall()
-    {
-        $trashEntities = $this->database->executeS('SELECT * FROM `'._DB_PREFIX_.'demonstration`');
+        $trashEntities = \Db::getInstance()->executeS('SELECT * FROM `'._DB_PREFIX_.'demonstration`');
 
         foreach ($trashEntities as $entity) {
-            $this->database->delete($entity['table_name'], $entity['id_name'].' IN ('.$entity['ids'].')');
+            \Db::getInstance()->delete($entity['table_name'], $entity['id_name'].' IN ('.$entity['ids'].')');
         }
     }
 }

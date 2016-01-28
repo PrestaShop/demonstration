@@ -46,7 +46,6 @@ class demonstration extends Module
          */
         $this->bootstrap = true;
 
-        parent::__construct();
 
         $this->displayName = $this->l('Demonstration');
         $this->description = $this->l('This module install a complete Shop with demo data.');
@@ -62,10 +61,7 @@ class demonstration extends Module
      */
     public function install()
     {
-        $demoInstaller = new \PrestaShop\Demonstration\DemoInstaller();
-        $demoInstaller->install();
-
-        return parent::install();
+        \PrestaShop\Demonstration\DemoInstaller::install();die('stop');
     }
 
     public function uninstall()
