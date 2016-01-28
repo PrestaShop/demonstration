@@ -32,7 +32,7 @@ class ConfigurationProvider
 {
     public function processFromPath()
     {
-        $locator = new FileLocator(__DIR__.'/config');
+        $locator = new FileLocator(__DIR__. DIRECTORY_SEPARATOR .'..' . DIRECTORY_SEPARATOR . '..' .  DIRECTORY_SEPARATOR  .'..' . DIRECTORY_SEPARATOR .'config');
         $loader = new YamlConfigLoader($locator);
 
         return $loader->load($locator->locate('products.yml'));

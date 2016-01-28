@@ -30,16 +30,6 @@ use Symfony\Component\Yaml\Parser;
 
 class YamlConfigLoader extends FileLoader
 {
-    public function getItems()
-    {
-
-    }
-
-    public function count()
-    {
-
-    }
-
     public function load($resource, $type = null)
     {
         return (new Parser())->parse(file_get_contents($resource));

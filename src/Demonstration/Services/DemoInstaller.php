@@ -29,16 +29,14 @@ use PrestaShop\Demonstration\Config\ConfigurationProvider;
 
 final class DemoInstaller
 {
-  private $configuration;
 
-  public function __construct(ConfigurationProvider $config)
+  public function __construct()
   {
-      $this->configuration = $config;
   }
 
   public function processConfiguration()
   {
-      return $this->configuration->processFromPath();
+      return (new ConfigurationProvider)->processFromPath();
   }
 
   public function install()

@@ -63,7 +63,8 @@ class Demonstration extends Module
      */
     public function install()
     {
-        $demoInstaller = new \PrestaShop\Demonstration\Services\Installer();
+
+        $demoInstaller = new \PrestaShop\Demonstration\Services\DemoInstaller();
         var_dump($demoInstaller->processConfiguration());die;
         return parent::install();
     }
