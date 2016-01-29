@@ -37,14 +37,8 @@ final class DemoInstaller
         foreach(ConfigurationProvider::processFromPath() as $section => $entities) {
             foreach($entities as $properties) {
                 try {
-                    list($productId, $productTable, $productIdName) = EntityFactory::createFromValues($section, $properties);
-                    $insertQuery = sprintf('INSERT INTO %sdescription VALUES (%d, %s, %s)',
-                        _DB_PREFIX_,
-                        $productId,
-                        $productTable,
-                        $productIdName
-                    );
-                    Db::getInstance()->executeS($insertQuery);
+                    $valuesToInsert = EntityFactory::createFromValues($section, $properties);
+                    Db::getInstance()->insert('demonstration', $valuesToInsert);
                 }catch(\Exception $e) {
                     throw new \PrestaShopException($e->getMessage());
                 }

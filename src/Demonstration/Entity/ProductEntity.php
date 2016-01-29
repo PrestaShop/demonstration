@@ -27,20 +27,28 @@ namespace PrestaShop\Demonstration\Entity;
 
 use PrestaShop\Demonstration\Contract\EntityInterface;
 
+use Context;
+use Product;
+
 class ProductEntity implements EntityInterface
 {
     public static function create(array $values)
     {
-        $language   = \Context::getContext()->language;
-        $product = new \Product(null, false, $language->id);
+        $language          = Context::getContext()->language;
+        $shop              = Context::getContext()->shop;
+        $defaultCategoryId = $shop->getCategory();
+
+        $product = new Product(null, false, $language->id);
 
         $product->name = $values['name'];
-        $product->link_rewrite = "demonstration_".$product->name;
-
+        $product->link_rewrite = 'demonstration_product';
+        $product->id_shop_default = $shop->id;
+        $product->id_category_default = $defaultCategoryId;
+        $product->active = 1;
         $product->save();
 
         return  [
-            'id' => $product->id,
+            'ids' => $product->id,
             'table_name' => _DB_PREFIX_.'product',
             'id_name' => 'id_product'
         ];
