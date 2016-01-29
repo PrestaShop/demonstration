@@ -48,8 +48,8 @@ class ProductEntity implements EntityInterface
         $product->save();
 
         return  [
-            'ids' => $product->id,
-            'table_name' => _DB_PREFIX_.'product',
+            'id' => $product->id,
+            'table_name' => 'product',
             'id_name' => 'id_product'
         ];
     }

@@ -51,7 +51,7 @@ final class DemoInstaller
         $trashEntities = Db::getInstance()->executeS('SELECT * FROM `'._DB_PREFIX_.'demonstration`');
 
         foreach ($trashEntities as $entity) {
-            Db::getInstance()->delete($entity['table_name'], $entity['id_name'].' IN ('.$entity['ids'].')');
+            Db::getInstance()->delete($entity['table_name'], $entity['id_name'].' = '.$entity['ids']);
         }
     }
 
@@ -61,7 +61,7 @@ final class DemoInstaller
             `id_demonstration` int(11) NOT NULL AUTO_INCREMENT,
             `table_name` varchar(20) NOT NULL,
             `id_name` varchar(20) NOT NULL,
-            `ids` text NOT NULL,
+            `id` text NOT NULL,
             PRIMARY KEY  (`id_demonstration`)
         ) ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8;';
 
