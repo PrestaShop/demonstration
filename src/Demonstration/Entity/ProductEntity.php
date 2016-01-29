@@ -29,13 +29,13 @@ use PrestaShop\Demonstration\Contract\EntityInterface;
 
 class ProductEntity implements EntityInterface
 {
-    public static function create($values)
+    public static function create(array $values)
     {
         $language   = \Context::getContext()->language;
         $product = new \Product(null, false, $language->id);
 
-        $product->name = "toto";
-        $product->link_rewrite = "toto";
+        $product->name = $values['name'];
+        $product->link_rewrite = "demonstration_".$product->name;
 
         $product->save();
 

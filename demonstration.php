@@ -29,6 +29,8 @@ if (!defined('_PS_VERSION_')) {
 
 require_once __DIR__.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
 
+use \PrestaShop\Demonstration\DemoInstaller as Installer;
+
 class demonstration extends Module
 {
     protected $config_form = false;
@@ -61,12 +63,15 @@ class demonstration extends Module
      */
     public function install()
     {
-        \PrestaShop\Demonstration\DemoInstaller::install();
+        Installer::createModuleDatabase();
+        Installer::addDemoAssets();
         parent::install();
     }
 
     public function uninstall()
     {
+        Installer::removeDemoAssets();
+        Installer::dropModuleDatabase();
         return parent::uninstall();
     }
 }

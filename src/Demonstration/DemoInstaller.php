@@ -25,17 +25,26 @@
 */
 namespace PrestaShop\Demonstration;
 
+use Db;
+
 use PrestaShop\Demonstration\Config\ConfigurationProvider;
 use PrestaShop\Demonstration\Entity\EntityFactory;
 
 final class DemoInstaller
 {
-    public static function install()
+    public static function addDemoAssets()
     {
         foreach(ConfigurationProvider::processFromPath() as $section => $entities) {
             foreach($entities as $properties) {
                 try {
-                    EntityFactory::createFromValues($section, $properties);
+                    list($productId, $productTable, $productIdName) = EntityFactory::createFromValues($section, $properties);
+                    $insertQuery = sprintf('INSERT INTO %sdescription VALUES (%d, %s, %s)',
+                        _DB_PREFIX_,
+                        $productId,
+                        $productTable,
+                        $productIdName
+                    );
+                    Db::getInstance()->executeS($insertQuery);
                 }catch(\Exception $e) {
                     throw new \PrestaShopException($e->getMessage());
                 }
@@ -43,12 +52,30 @@ final class DemoInstaller
         }
     }
 
-    public static function uninstall()
+    public static function removeDemoAssets()
     {
-        $trashEntities = \Db::getInstance()->executeS('SELECT * FROM `'._DB_PREFIX_.'demonstration`');
+        $trashEntities = Db::getInstance()->executeS('SELECT * FROM `'._DB_PREFIX_.'demonstration`');
 
         foreach ($trashEntities as $entity) {
-            \Db::getInstance()->delete($entity['table_name'], $entity['id_name'].' IN ('.$entity['ids'].')');
+            Db::getInstance()->delete($entity['table_name'], $entity['id_name'].' IN ('.$entity['ids'].')');
         }
+    }
+
+    public static function createModuleDatabase()
+    {
+        $query = 'CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'demonstration` (
+            `id_demonstration` int(11) NOT NULL AUTO_INCREMENT,
+            `table_name` varchar(20) NOT NULL,
+            `id_name` varchar(20) NOT NULL,
+            `ids` text NOT NULL,
+            PRIMARY KEY  (`id_demonstration`)
+        ) ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8;';
+
+        return Db::getInstance()->execute($query);
+    }
+
+    public static function dropModuleDatabase()
+    {
+        return Db::getInstance()->execute('DROP TABLE IF EXISTS `'._DB_PREFIX_.'demonstration`');
     }
 }
