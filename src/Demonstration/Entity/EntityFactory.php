@@ -25,25 +25,20 @@
  */
 namespace PrestaShop\Demonstration\Entity;
 
+use PrestaShop\Demonstration\Entity\ProductEntity;
+
 class EntityFactory
 {
     public static function createFromValues($category, array $values)
     {
         switch($category) {
             case 'products':
-                $entity = self::createProduct($values);
+                $entity = ProductEntity::create($values);
             break;
             default:
                 return;
         }
 
         return $entity;
-    }
-
-    private static function createProduct(array $values)
-    {
-        $product = new \Product();
-        $product->link_rewrite=[];
-        return $product;
     }
 }

@@ -34,8 +34,11 @@ final class DemoInstaller
     {
         foreach(ConfigurationProvider::processFromPath() as $section => $entities) {
             foreach($entities as $properties) {
-                $entity = EntityFactory::createFromValues($section, $properties);
-                $entity->save();
+                try {
+                    EntityFactory::createFromValues($section, $properties);
+                }catch(\Exception $e) {
+                    throw new \PrestaShopException($e->getMessage());
+                }
             }
         }
     }

@@ -3,10 +3,10 @@
     <name>demonstration</name>
     <displayName><![CDATA[Demonstration]]></displayName>
     <version><![CDATA[0.1.0]]></version>
-    <description><![CDATA[This module install a complete Shop with demo data.]]></description>
+    <description><![CDATA[Ce module installe une boutique de démonstration complète]]></description>
     <author><![CDATA[PrestaShop]]></author>
     <tab><![CDATA[administration]]></tab>
-	<confirmUninstall><![CDATA[This will delete all demonstration data.]]></confirmUninstall>
+	<confirmUninstall><![CDATA[Toutes les données de démonstration seront supprimées.]]></confirmUninstall>
     <is_configurable>0</is_configurable>
     <need_instance>1</need_instance>
 	<limited_countries></limited_countries>

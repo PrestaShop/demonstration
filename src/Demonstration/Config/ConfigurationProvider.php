@@ -26,7 +26,7 @@
 namespace PrestaShop\Demonstration\Config;
 
 use Symfony\Component\Config\FileLocator;
-use PrestaShop\Demonstration\ConfigLoader\YamlConfigLoader;
+use PrestaShop\Demonstration\Loader\YamlLoader;
 
 class ConfigurationProvider
 {
@@ -34,6 +34,6 @@ class ConfigurationProvider
     {
         $locator = new FileLocator(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'config');
 
-        return (new YamlConfigLoader($locator))->load('config.yml');
+        return (new YamlLoader($locator))->load('config.yml');
     }
 }

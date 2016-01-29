@@ -23,11 +23,26 @@
  *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  *  International Registered Trademark & Property of PrestaShop SA
  */
-namespace PrestaShop\Demonstration\Contract;
+namespace PrestaShop\Demonstration\Entity;
 
-interface EntityLoaderInterface
+use PrestaShop\Demonstration\Contract\EntityInterface;
+
+class ProductEntity implements EntityInterface
 {
-    public function getItems();
+    public static function create($values)
+    {
+        $language   = \Context::getContext()->language;
+        $product = new \Product(null, false, $language->id);
 
-    public function count();
+        $product->name = "toto";
+        $product->link_rewrite = "toto";
+
+        $product->save();
+
+        return  [
+            'id' => $product->id,
+            'table_name' => _DB_PREFIX_.'product',
+            'id_name' => 'id_product'
+        ];
+    }
 }

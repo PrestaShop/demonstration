@@ -61,7 +61,8 @@ class demonstration extends Module
      */
     public function install()
     {
-        \PrestaShop\Demonstration\DemoInstaller::install();die('stop');
+        \PrestaShop\Demonstration\DemoInstaller::install();
+        parent::install();
     }
 
     public function uninstall()

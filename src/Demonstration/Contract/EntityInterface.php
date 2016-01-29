@@ -23,8 +23,9 @@
  *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  *  International Registered Trademark & Property of PrestaShop SA
  */
-namespace PrestaShop\Demonstration\Entity;
+namespace PrestaShop\Demonstration\Contract;
 
-abstract class AbstractEntity
+interface EntityInterface
 {
+    public static function create(array $values);
 }

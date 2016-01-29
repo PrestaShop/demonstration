@@ -23,14 +23,14 @@
  *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  *  International Registered Trademark & Property of PrestaShop SA
  */
-namespace PrestaShop\Demonstration\ConfigLoader;
+namespace PrestaShop\Demonstration\Loader;
 
 use Symfony\Component\Config\Loader\FileLoader;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Exception\ParseException;
 use \InvalidArgumentException;
 
-class YamlConfigLoader extends FileLoader
+class YamlLoader extends FileLoader
 {
     private $yamlParser;
 
