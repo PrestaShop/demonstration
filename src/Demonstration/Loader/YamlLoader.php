@@ -61,18 +61,22 @@ class YamlLoader extends FileLoader
         );
     }
 
-    protected function loadFile($file)
+    protected function loadFile($filepath)
     {
         if (!class_exists('Symfony\Component\Yaml\Parser')) {
             throw new RuntimeException('Unable to load YAML config files as the Symfony Yaml Component is not installed.');
         }
 
-        if (!stream_is_local($file)) {
-            throw new InvalidArgumentException(sprintf('This is not a local file "%s".', $file));
+        if (!stream_is_local($filepath)) {
+            throw new InvalidArgumentException(sprintf('This is not a local file "%s".', basename($filepath)));
         }
 
-        if (!file_exists($file)) {
-            throw new InvalidArgumentException(sprintf('The service file "%s" is not valid.', $file));
+        if (!file_exists($filepath)) {
+            throw new InvalidArgumentException(sprintf('The file "%s" does not exists.', basename($filepath)));
+        }
+
+        if (!$this->supports($filepath)) {
+            throw new InvalidArgumentException(sprintf('The file "%s" is not a YAML file.', basename($filepath)));
         }
 
         if (null === $this->yamlParser) {
@@ -80,9 +84,9 @@ class YamlLoader extends FileLoader
         }
 
         try {
-            $configuration = $this->yamlParser->parse(file_get_contents($file));
+            $configuration = $this->yamlParser->parse(file_get_contents($filepath));
         } catch (ParseException $e) {
-            throw new InvalidArgumentException(sprintf('The file "%s" does not contain valid YAML.', basename($file)), 0, $e);
+            throw new InvalidArgumentException(sprintf('The file "%s" does not contain valid YAML.', basename($filepath)), 0, $e);
         }
 
         return $configuration;

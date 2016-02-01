@@ -1,4 +1,5 @@
 <?php
+namespace PrestaShop\Demonstration\Test\Config;
 /**
  * 2007-2015 PrestaShop.
  *
