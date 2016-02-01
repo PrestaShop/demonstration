@@ -40,7 +40,10 @@ class ProductEntity implements EntityInterface
 
         $product = new Product(null, false, $language->id);
 
-        $product->name = $values['name'];
+        foreach($values as $property => $value) {
+            $product->{$property} = $value;
+        }
+
         $product->link_rewrite = 'demonstration_product';
         $product->id_shop_default = $shop->id;
         $product->id_category_default = $defaultCategoryId;

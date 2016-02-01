@@ -15,10 +15,16 @@
     "symfony/dependency-injection": "^2.8",
     "symfony/yaml": "^2.8"
   },
+  "require-dev" : {
+    "phpunit/phpunit": "~4.7"
+  },
   "autoload": {
-    "psr-4": {"PrestaShop\\Demonstration\\": "src/Demonstration"},
+    "psr-4": {
+      "PrestaShop\\Demonstration\\": "src/Demonstration",
+      "PrestaShop\\Demonstration\\Test": "src/tests"
+    },
     "exclude-from-classmap": [
-      "src/Demonstration/Tests/"
+      "src/tests/"
     ]
   },
   "config": {
