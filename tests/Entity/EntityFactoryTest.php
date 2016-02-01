@@ -1,4 +1,5 @@
 <?php
+namespace PrestaShop\Demonstration\Test\Entity;
 /**
  * 2007-2015 PrestaShop.
  *
@@ -23,40 +24,37 @@
  *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  *  International Registered Trademark & Property of PrestaShop SA
  */
-namespace PrestaShop\Demonstration\Entity;
 
-use PrestaShop\Demonstration\Contract\EntityInterface;
-use Context;
+use PrestaShop\Demonstration\Entity\EntityFactory;
 use Product;
 
-class ProductEntity implements EntityInterface
+class EntityFactoryTest extends \PHPUnit_Framework_TestCase
 {
-    public static function create(array $values)
+    const NOTICE = "[Factory]";
+
+    public function testCreateFromValuesNonManaged()
     {
-        $language = Context::getContext()->language;
-        $shop = Context::getContext()->shop;
-        $defaultCategoryId = $shop->getCategory();
+        $this->assertNull(EntityFactory::createFromValues('unknown', []));
+    }
 
-        $product = new Product(null, false, $language->id);
+    /**
+     * @todo move this behavior to an helper function deleteFromDatabase($id, $tableName)
+     */
+    public function testCreateFromValuesWithProduct()
+    {
+        $returnProperties = EntityFactory::createFromValues('products', $this->fakeProductData());
 
-        foreach ($values as $property => $value) {
-            $product->{$property} = $value;
-        }
+        $this->assertInternalType('array', $returnProperties);
+        $this->assertTrue(Product::existsInDatabase($returnProperties['id'], $returnProperties['table_name']));
 
-        $product->link_rewrite = 'demonstration_product';
-        $product->id_shop_default = $shop->id;
-        $product->id_category_default = $defaultCategoryId;
-        $product->active = 1;
+        $product = new \Product($returnProperties['id']);
+        $product->delete();
+    }
 
-
-        if($product->save()) {
-            return  [
-                'id' => $product->id,
-                'table_name' => 'product',
-                'id_name' => 'id_product',
-            ];
-        }
-
-        return false;
+    private function fakeProductData()
+    {
+        return [
+            'name' => 'new product'
+        ];
     }
 }

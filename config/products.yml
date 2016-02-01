@@ -1,6 +1,5 @@
 products:
   -
-      id: 1
       image: { src:"product_mini_1.jpg", alt:"", class:"imgm img-thumbnail"}
       name: T-shirt délavé à manches courtes
       reference: "demo_1"
@@ -11,7 +10,6 @@ products:
       status: 0
       position: 0
   -
-      id: 3
       image: { src:"product_mini_8.jpg", alt:"", class:"imgm img-thumbnail"}
       name: "Robe imprimée"
       reference: "demo_3"
@@ -22,7 +20,6 @@ products:
       status: 0
       position: 2
   -
-      id: 4
       image: { src:"product_mini_10.jpg", alt:"", class:"imgm img-thumbnail"}
       name: "Robe imprimée"
       reference: "demo_4"
@@ -33,7 +30,6 @@ products:
       status: 0
       position: 3
   -
-      id: 5
       image: { src:"product_mini_12.jpg", alt:"", class:"imgm img-thumbnail"}
       name: "Robe d'été imprimée"
       reference: "demo_5"
@@ -44,7 +40,6 @@ products:
       status: 0
       position: 4
   -
-      id: 6
       image: { src:"product_mini_16.jpg", alt:"", class:"imgm img-thumbnail"}
       name: "Robe d'été imprimée"
       reference: "demo_6"
@@ -55,7 +50,6 @@ products:
       status: 0
       position: 5
   -
-      id: 7
       image: { src:"product_mini_20.jpg", alt:"", class:"imgm img-thumbnail"}
       name: "Robe en mousseline imprimée"
       reference: "demo_7"
@@ -66,7 +60,6 @@ products:
       status: 0
       position: 6
   -
-      id: 2
       image: { src:"product_mini_7.jpg", alt:"", class:"imgm img-thumbnail"}
       name: Chemisier
       reference: "demo_2"
