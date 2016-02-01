@@ -32,12 +32,8 @@ class ConfigurationProvider
 {
     public static function processFromPath($configPath = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'config', $configName = "config.yml")
     {
-        try {
-            $locator = new FileLocator($configPath);
+        $locator = new FileLocator($configPath);
 
-            return (new YamlLoader($locator))->load($configName);
-        }catch(\InvalidArgumentException $e) {
-            throw $e->getPrevious();
-        }
+        return (new YamlLoader($locator))->load($configName);
     }
 }

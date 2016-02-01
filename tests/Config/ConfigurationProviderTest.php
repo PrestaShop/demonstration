@@ -75,10 +75,10 @@ class ConfigurationProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * We expect to return the Symfony Yaml parsing exception with an explicit message.
+     * We expect to return an exception with an explicit message.
      *
-     * @expectedException        \Symfony\Component\Yaml\Exception\ParseException
-     * @expectedExceptionMessage Unable to parse at line 3 (near "id 1 # semi-colon is missing")
+     * @expectedException        \InvalidArgumentException
+     * @expectedExceptionMessage The file "malformed-config.yml" does not contain valid YAML.
      */
     public function testProcessFromPathMalformedConfig()
     {
