@@ -28,7 +28,7 @@ namespace PrestaShop\Demonstration\Loader;
 use Symfony\Component\Config\Loader\FileLoader;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Exception\ParseException;
-use \InvalidArgumentException;
+use InvalidArgumentException;
 
 class YamlLoader extends FileLoader
 {
@@ -42,13 +42,14 @@ class YamlLoader extends FileLoader
         if (isset($configuration['imports']) && is_array($configuration['imports'])) {
             $imports = $configuration['imports'];
 
-            foreach($imports as $import) {
+            foreach ($imports as $import) {
                 $path = $this->locator->locate($import['resource']);
                 $configuration = array_merge($configuration, $this->loadFile($path));
             }
 
             unset($configuration['imports']);
         }
+
         return $configuration;
     }
 

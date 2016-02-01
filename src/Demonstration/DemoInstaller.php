@@ -26,7 +26,6 @@
 namespace PrestaShop\Demonstration;
 
 use Db;
-
 use PrestaShop\Demonstration\Config\ConfigurationProvider;
 use PrestaShop\Demonstration\Entity\EntityFactory;
 
@@ -34,12 +33,12 @@ final class DemoInstaller
 {
     public static function addDemoAssets()
     {
-        foreach(ConfigurationProvider::processFromPath() as $section => $entities) {
-            foreach($entities as $properties) {
+        foreach (ConfigurationProvider::processFromPath() as $section => $entities) {
+            foreach ($entities as $properties) {
                 try {
                     $valuesToInsert = EntityFactory::createFromValues($section, $properties);
                     Db::getInstance()->insert('demonstration', $valuesToInsert);
-                }catch(\Exception $e) {
+                } catch (\Exception $e) {
                     throw new \PrestaShopException($e->getMessage());
                 }
             }

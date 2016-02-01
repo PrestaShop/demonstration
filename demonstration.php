@@ -48,7 +48,6 @@ class demonstration extends Module
          */
         $this->bootstrap = true;
 
-
         $this->displayName = $this->l('Demonstration');
         $this->description = $this->l('This module install a complete Shop with demo data.');
 
@@ -72,6 +71,7 @@ class demonstration extends Module
     {
         Installer::removeDemoAssets();
         Installer::dropModuleDatabase();
+
         return parent::uninstall();
     }
 }

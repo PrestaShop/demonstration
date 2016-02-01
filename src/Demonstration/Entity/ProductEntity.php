@@ -26,7 +26,6 @@
 namespace PrestaShop\Demonstration\Entity;
 
 use PrestaShop\Demonstration\Contract\EntityInterface;
-
 use Context;
 use Product;
 
@@ -34,13 +33,13 @@ class ProductEntity implements EntityInterface
 {
     public static function create(array $values)
     {
-        $language          = Context::getContext()->language;
-        $shop              = Context::getContext()->shop;
+        $language = Context::getContext()->language;
+        $shop = Context::getContext()->shop;
         $defaultCategoryId = $shop->getCategory();
 
         $product = new Product(null, false, $language->id);
 
-        foreach($values as $property => $value) {
+        foreach ($values as $property => $value) {
             $product->{$property} = $value;
         }
 
@@ -53,7 +52,7 @@ class ProductEntity implements EntityInterface
         return  [
             'id' => $product->id,
             'table_name' => 'product',
-            'id_name' => 'id_product'
+            'id_name' => 'id_product',
         ];
     }
 }

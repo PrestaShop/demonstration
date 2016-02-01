@@ -25,13 +25,11 @@
  */
 namespace PrestaShop\Demonstration\Entity;
 
-use PrestaShop\Demonstration\Entity\ProductEntity;
-
 class EntityFactory
 {
     public static function createFromValues($category, array $values)
     {
-        switch($category) {
+        switch ($category) {
             case 'products':
                 $entity = ProductEntity::create($values);
             break;
