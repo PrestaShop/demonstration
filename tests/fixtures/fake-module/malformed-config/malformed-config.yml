@@ -1,0 +1,12 @@
+products:
+  -
+    id 1 # semi-colon is missing
+    image: { src:"product_mini_1.jpg", alt:"", class:"imgm img-thumbnail"}
+    name: T-shirt délavé à manches courtes
+    reference: "demo_1"
+    category: "T-shirts"
+    base_price: 16.510000
+    final_price: 19.81
+    quantity: 1799
+    status: 0
+    position: 0

@@ -1,0 +1,5 @@
+imports:
+    - { resource: 'fake-products.yml' }
+    - { resource: 'fake-users.yml' }
+    - { resource: 'sub-config/sub-fake-foo.yml' }
+

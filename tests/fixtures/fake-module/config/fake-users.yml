@@ -1,0 +1,25 @@
+users:
+  -
+    id: 1
+    firstname: "Mickaël"
+    lastname: "Andrieu"
+    role: "super-admin"
+    mail: "mickael.andrieu@prestashop.com"
+  -
+    id: 2
+    firstname: "Julien"
+    lastname: "Martin"
+    role: "logistician"
+    mail: "julien.martin@prestashop.com"
+  -
+    id: 3
+    firstname: "Xavier"
+    lastname: "Gouley"
+    role: "traductor"
+    mail: "xavier.gouley@prestashop.com"
+  -
+    id: 4
+    firstname: "Puff"
+    lastname: "The cat"
+    role: "business-executive"
+    mail: "puff_the_cat@prestashop.com"

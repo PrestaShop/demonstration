@@ -30,10 +30,14 @@ use PrestaShop\Demonstration\Loader\YamlLoader;
 
 class ConfigurationProvider
 {
-    public static function processFromPath()
+    public static function processFromPath($configPath = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'config', $configName = "config.yml")
     {
-        $locator = new FileLocator(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'config');
+        try {
+            $locator = new FileLocator($configPath);
 
-        return (new YamlLoader($locator))->load('config.yml');
+            return (new YamlLoader($locator))->load($configName);
+        }catch(\InvalidArgumentException $e) {
+            throw $e->getPrevious();
+        }
     }
 }
