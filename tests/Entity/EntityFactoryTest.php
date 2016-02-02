@@ -27,6 +27,7 @@ namespace PrestaShop\Demonstration\Test\Entity;
 
 use PrestaShop\Demonstration\Entity\EntityFactory;
 use Product;
+use stdClass;
 
 class EntityFactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -54,7 +55,18 @@ class EntityFactoryTest extends \PHPUnit_Framework_TestCase
     private function fakeProductData()
     {
         return [
-            'name' => 'new product'
+            'name' => 'new product',
+            'images' => [$this->fakeImageData(1), $this->fakeImageData(2)]
         ];
+    }
+
+    private function fakeImageData($id)
+    {
+        $image = new stdClass();
+        $image->src ="product_mini_$id.jpg";
+        $image->alt = "alt for id $id";
+        $image->cssClass = "img img-thumbnail";
+
+        return $image;
     }
 }

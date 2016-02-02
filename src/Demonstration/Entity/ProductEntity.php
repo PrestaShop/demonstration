@@ -26,8 +26,14 @@
 namespace PrestaShop\Demonstration\Entity;
 
 use PrestaShop\Demonstration\Contract\EntityInterface;
+use PrestaShop\Demonstration\Services\ImageUploader;
+
 use Context;
+use Configuration;
+use Image;
 use Product;
+use stdClass;
+
 
 class ProductEntity implements EntityInterface
 {
@@ -40,7 +46,9 @@ class ProductEntity implements EntityInterface
         $product = new Product(null, false, $language->id);
 
         foreach ($values as $property => $value) {
-            $product->{$property} = $value;
+            if (property_exists('Product', $property)) {
+                $product->{$property} = $value;
+            }
         }
 
         $product->link_rewrite = 'demonstration_product';
@@ -50,6 +58,10 @@ class ProductEntity implements EntityInterface
 
 
         if($product->save()) {
+            if(isset($values['images'])) {
+                self::manageImages($product, $values['images']);
+            }
+
             return  [
                 'id' => $product->id,
                 'table_name' => 'product',
@@ -58,5 +70,39 @@ class ProductEntity implements EntityInterface
         }
 
         return false;
+    }
+
+    /**
+     * @param $product Product instance:
+     * - an `src` property used to move images from modules to Product images folder
+     * - an `alt` property refers to HTML attribute
+     * - an `cssClass` property refers to `css` HTML attribute
+     *
+     * @param $images stdClass[] a collection of Images from configuration
+     */
+    public static function manageImages(Product $product, $images)
+    {
+        foreach($images as $imageObject) {
+            self::createAndUploadImage($product->id, $imageObject, $product->id_shop_default);
+        }
+    }
+
+    private static function createAndUploadImage($productId, stdClass $imageObject, $shopId, $imgPath = __DIR__ . '/../../../assets/img/')
+    {
+        $image = new Image();
+        $image->id_product = $productId;
+        $image->position = Image::getHighestPosition($productId) + 1;
+        $image->legend = $imageObject->alt;
+
+        $image->save();
+
+        ImageUploader::upload(
+            $productId,
+            $image->id,
+            $imgPath.$imageObject->src,
+            'products',
+            true,
+            $shopId
+        );
     }
 }

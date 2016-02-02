@@ -1,6 +1,7 @@
 products:
   -
-      image: { src:"product_mini_1.jpg", alt:"", class:"imgm img-thumbnail"}
+      images:
+          - { src:"product_mini_1.jpg", alt:"", cssClass:"img img-thumbnail"}
       name: T-shirt délavé à manches courtes
       reference: "demo_1"
       category: "T-shirts"
@@ -10,7 +11,8 @@ products:
       status: 0
       position: 0
   -
-      image: { src:"product_mini_8.jpg", alt:"", class:"imgm img-thumbnail"}
+      images:
+          - { src:"product_mini_8.jpg", alt:"", cssClass:"img img-thumbnail"}
       name: "Robe imprimée"
       reference: "demo_3"
       category: "Robes décontractées"
@@ -20,7 +22,8 @@ products:
       status: 0
       position: 2
   -
-      image: { src:"product_mini_10.jpg", alt:"", class:"imgm img-thumbnail"}
+      images:
+          - { src:"product_mini_10.jpg", alt:"", cssClass:"img img-thumbnail"}
       name: "Robe imprimée"
       reference: "demo_4"
       category: "Robes de soirée"
@@ -30,7 +33,8 @@ products:
       status: 0
       position: 3
   -
-      image: { src:"product_mini_12.jpg", alt:"", class:"imgm img-thumbnail"}
+      images:
+          - { src:"product_mini_12.jpg", alt:"", cssClass:"img img-thumbnail"}
       name: "Robe d'été imprimée"
       reference: "demo_5"
       category: "Robes d'été"
@@ -40,7 +44,8 @@ products:
       status: 0
       position: 4
   -
-      image: { src:"product_mini_16.jpg", alt:"", class:"imgm img-thumbnail"}
+      images:
+          - { src:"product_mini_16.jpg", alt:"", cssClass:"img img-thumbnail"}
       name: "Robe d'été imprimée"
       reference: "demo_6"
       category: "Robes d'été"
@@ -50,7 +55,8 @@ products:
       status: 0
       position: 5
   -
-      image: { src:"product_mini_20.jpg", alt:"", class:"imgm img-thumbnail"}
+      images:
+          - { src:"product_mini_20.jpg", alt:"", cssClass:"img img-thumbnail"}
       name: "Robe en mousseline imprimée"
       reference: "demo_7"
       category: "Robes d'été"
@@ -60,7 +66,8 @@ products:
       status: 0
       position: 6
   -
-      image: { src:"product_mini_7.jpg", alt:"", class:"imgm img-thumbnail"}
+      images:
+          - { src:"product_mini_7.jpg", alt:"", cssClass:"img img-thumbnail"}
       name: Chemisier
       reference: "demo_2"
       category: "Chemisiers"

@@ -50,8 +50,10 @@ final class DemoInstaller
         $trashEntities = Db::getInstance()->executeS('SELECT * FROM `'._DB_PREFIX_.'demonstration`');
 
         foreach ($trashEntities as $entity) {
-            Db::getInstance()->delete($entity['table_name'], $entity['id_name'].' = '.$entity['ids']);
+            Db::getInstance()->delete($entity['table_name'], $entity['id_name'].' = '.$entity['id']);
         }
+
+        self::dropModuleDatabase();
     }
 
     public static function createModuleDatabase()
