@@ -88,19 +88,19 @@ class ProductEntity implements EntityInterface
         }
     }
 
-    private static function createAndUploadImage($productId, stdClass $imageObject, $shopId, $imgPath = __DIR__ . '/../../../assets/img/')
+    private static function createAndUploadImage($productId, array $imageArray, $shopId, $imgPath = __DIR__ . '/../../../assets/img/')
     {
         $image = new Image();
         $image->id_product = $productId;
         $image->position = Image::getHighestPosition($productId) + 1;
-        $image->legend = $imageObject->alt;
+        $image->legend = $imageArray['alt'];
 
         $image->save();
 
         ImageUploader::upload(
             $productId,
             $image->id,
-            $imgPath.$imageObject->src,
+            $imgPath.$imageArray['src'],
             'products',
             true,
             $shopId
