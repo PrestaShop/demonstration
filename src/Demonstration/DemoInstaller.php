@@ -26,8 +26,10 @@
 namespace PrestaShop\Demonstration;
 
 use Db;
+use Exception;
 use PrestaShop\Demonstration\Config\ConfigurationProvider;
 use PrestaShop\Demonstration\Entity\EntityFactory;
+use PrestaShopException;
 
 final class DemoInstaller
 {
@@ -38,8 +40,8 @@ final class DemoInstaller
                 try {
                     $valuesToInsert = EntityFactory::createFromValues($section, $properties);
                     Db::getInstance()->insert('demonstration', $valuesToInsert);
-                } catch (\Exception $e) {
-                    throw new \PrestaShopException($e->getMessage());
+                } catch (Exception $e) {
+                    throw new PrestaShopException($e->getMessage());
                 }
             }
         }
