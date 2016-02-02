@@ -33,6 +33,7 @@ use Configuration;
 use Image;
 use Product;
 use stdClass;
+use Tools;
 
 
 class ProductEntity implements EntityInterface
@@ -51,7 +52,7 @@ class ProductEntity implements EntityInterface
             }
         }
 
-        $product->link_rewrite = 'demonstration_product';
+        $product->link_rewrite = Tools::link_rewrite($product->name);
         $product->id_shop_default = $shop->id;
         $product->id_category_default = $defaultCategoryId;
         $product->active = 1;
