@@ -33,8 +33,11 @@ class EntityFactory
             case 'products':
                 $entity = ProductEntity::create($values, $assetsPath);
             break;
+            case 'categories':
+                $entity = CategoryEntity::create($values, $assetsPath);
+            break;
             default:
-                return;
+            return;
         }
 
         return $entity;

@@ -26,8 +26,8 @@ namespace PrestaShop\Demonstration\Test\Entity;
  */
 
 use PrestaShop\Demonstration\Entity\EntityFactory;
+use Category;
 use Product;
-use stdClass;
 
 class EntityFactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -54,11 +54,39 @@ class EntityFactoryTest extends \PHPUnit_Framework_TestCase
         $product->delete();
     }
 
+    public function testCreateFromValuesWithCategory()
+    {
+        $fixturesImgPath = __DIR__.'/../fixtures/assets/';
+        $returnProperties = EntityFactory::createFromValues('categories', $this->fakeCategoryData(), $fixturesImgPath);
+
+        $this->assertInternalType('array', $returnProperties);
+        $this->assertTrue(Category::existsInDatabase($returnProperties['id'], $returnProperties['table_name']));
+
+        $product = new \Category($returnProperties['id']);
+        $product->deleteImage();
+        $product->delete();
+    }
+
     private function fakeProductData()
     {
         return [
             'name' => 'new product',
             'images' => [$this->fakeImageData(1), $this->fakeImageData(2)]
+        ];
+    }
+
+    private function fakeCategoryData()
+    {
+        return [
+            'ps_id' => 1,
+            'name' => 'Category 1',
+            'position' => 1,
+            'description' => 'Category description 1',
+            'image' => [
+                'src' => 'category_1.jpg',
+                'alt' => 'category alt 1',
+                'cssClass' => 'cat cat-thumbnail'
+            ]
         ];
     }
 

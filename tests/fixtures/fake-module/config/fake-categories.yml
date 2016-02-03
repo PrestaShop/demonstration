@@ -1,0 +1,19 @@
+categories:
+  -
+    ps_id: 1
+    name: "Category 1"
+    position: 1
+    description: "Category description 1"
+    image: {src:"category_1.jpg", alt:"", cssClass:"cat cat-thumbnail"}
+  -
+    ps_id: 2
+    name: "Category 2"
+    position: 2
+    description: "Category description 2"
+    image: {src:"category_2.jpg", alt:"", cssClass:"cat cat-thumbnail"}
+  -
+    ps_id: 2_1
+    name: "Category 2 > 1"
+    position: 1
+    description: "Category description 2 > 1"
+    image: {src:"category_2_1.jpg", alt:"", cssClass:"cat sub-cat-thumbnail"}

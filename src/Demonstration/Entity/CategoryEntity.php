@@ -31,39 +31,34 @@ use PrestaShop\Demonstration\Services\ImageUploader;
 use Context;
 use Configuration;
 use Image;
-use Product;
+use Category;
+use stdClass;
 use Tools;
 
 
-class ProductEntity implements EntityInterface
+class CategoryEntity implements EntityInterface
 {
     public static function create(array $values, $assetsPath)
     {
         $language = Context::getContext()->language;
-        $shop = Context::getContext()->shop;
-        $defaultCategoryId = $shop->getCategory();
-
-        $product = new Product(null, false, $language->id);
+        $category = new Category(null, false, $language->id);
 
         foreach ($values as $property => $value) {
-            if (property_exists('Product', $property)) {
-                $product->{$property} = $value;
+            if (property_exists('Category', $property)) {
+                $category->{$property} = $value;
             }
         }
 
-        $product->link_rewrite = Tools::link_rewrite($product->name);
-        $product->id_shop_default = $shop->id;
-        $product->id_category_default = $defaultCategoryId;
-        $product->active = 1;
+        $category->active = 1;
+        $category->link_rewrite = Tools::link_rewrite($category->name);
 
-
-        if($product->save()) {
+        if($category->save()) {
             if(isset($values['images'])) {
-                self::manageImages($product, $values['images'], $assetsPath.'/img/');
+                self::manageImages($category, $values['images'], $assetsPath.'/img/');
             }
 
             return  [
-                'id' => $product->id,
+                'id' => $category->id,
                 'table_name' => 'product',
                 'id_name' => 'id_product',
             ];
@@ -73,7 +68,7 @@ class ProductEntity implements EntityInterface
     }
 
     /**
-     * @param $product Product instance:
+     * @param $category Category instance:
      * - an `src` property used to move images from modules to Product images folder
      * - an `alt` property refers to HTML attribute
      * - an `cssClass` property refers to `css` HTML attribute
@@ -81,29 +76,30 @@ class ProductEntity implements EntityInterface
      * @param $images stdClass[] a collection of Images from configuration
      * @param $imgPath define folder where images should be found
      */
-    public static function manageImages(Product $product, $images, $imgPath)
+    public static function manageImages(Category $category, $images, $imgPath)
     {
         foreach($images as $imageObject) {
-            self::createAndUploadImage($product, $imageObject, $product->id_shop_default, $imgPath);
+            self::createAndUploadImage($category, $imageObject, $category->id_shop_default, $imgPath);
         }
     }
 
-    private static function createAndUploadImage($product, array $imageArray, $shopId, $imgPath)
+    private static function createAndUploadImage($category, array $imageArray, $shopId, $imgPath)
     {
         $image = new Image();
-        $image->id_product = $product->id;
-        $image->position = Image::getHighestPosition($product->id) + 1;
         $image->legend = $imageArray['alt'];
 
         $image->save();
 
         ImageUploader::upload(
-            $product->id,
+            $category->id,
             $image->id,
             $imgPath.$imageArray['src'],
-            'products',
+            'categories',
             true,
             $shopId
         );
+
+        $category->id_image = $image->id;
+        $category->update();
     }
 }
