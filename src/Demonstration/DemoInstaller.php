@@ -45,6 +45,8 @@ final class DemoInstaller
                 }
             }
         }
+
+        return true;
     }
 
     public static function removeDemoAssets()
