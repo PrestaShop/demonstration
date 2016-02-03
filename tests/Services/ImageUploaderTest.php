@@ -46,7 +46,7 @@ class ImageUploaderTest extends \PHPUnit_Framework_TestCase
             0 => [
                 0 => 800,
                 1 => 800,
-                2 => 'path/to/prestashop/img/p/1/9/5/195'
+                2 => __DIR__.'/../fixtures/assets/moved-img/195'
             ]
         ];
 

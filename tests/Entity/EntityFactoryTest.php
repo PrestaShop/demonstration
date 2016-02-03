@@ -50,6 +50,7 @@ class EntityFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(Product::existsInDatabase($returnProperties['id'], $returnProperties['table_name']));
 
         $product = new \Product($returnProperties['id']);
+        $product->deleteImages();
         $product->delete();
     }
 

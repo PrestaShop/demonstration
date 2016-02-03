@@ -64,7 +64,7 @@ class ImageUploader
                         break;
                 }
 
-                $pathData= [$targetWidth, $targetHeight, $imageObjPath];
+                $pathData[] = [$targetWidth, $targetHeight, $imageObjPath];
                 $imagesTypes = ImageType::getImagesTypes($type, true);
 
                 foreach ($imagesTypes as $imageType) {
@@ -114,7 +114,7 @@ class ImageUploader
         $targetName = $imageType['name'];
         $path = '';
         $completePath = '-'.stripslashes($targetName).'.jpg';
-        foreach (array_reverse($pathData) as $pathInfo) {
+        foreach ($pathData as $pathInfo) {
             list($width, $height, $path) = $pathInfo;
             if ($width >= $targetWidth && $height >= $targetHeight) {
                 return "{$path}{$completePath}";
