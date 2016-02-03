@@ -64,7 +64,7 @@ class ImageUploader
                         break;
                 }
 
-                $pathData[] = [$targetWidth, $targetHeight, $imageObjPath.'.jpg'];
+                $pathData= [$targetWidth, $targetHeight, $imageObjPath];
                 $imagesTypes = ImageType::getImagesTypes($type, true);
 
                 foreach ($imagesTypes as $imageType) {

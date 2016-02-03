@@ -27,5 +27,10 @@ namespace PrestaShop\Demonstration\Contract;
 
 interface EntityInterface
 {
-    public static function create(array $values);
+    /**
+     * @param array $values Product properties (can be strings, scalars, booleans)
+     * @param $assetPath Define the folder when we should manipulate files like images or attachments
+     * @return \Object
+     */
+    public static function create(array $values, $assetPath);
 }

@@ -43,7 +43,8 @@ class EntityFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateFromValuesWithProduct()
     {
-        $returnProperties = EntityFactory::createFromValues('products', $this->fakeProductData());
+        $fixturesImgPath = __DIR__.'/../fixtures/assets/';
+        $returnProperties = EntityFactory::createFromValues('products', $this->fakeProductData(), $fixturesImgPath);
 
         $this->assertInternalType('array', $returnProperties);
         $this->assertTrue(Product::existsInDatabase($returnProperties['id'], $returnProperties['table_name']));
@@ -62,11 +63,10 @@ class EntityFactoryTest extends \PHPUnit_Framework_TestCase
 
     private function fakeImageData($id)
     {
-        $image = new stdClass();
-        $image->src ="product_mini_$id.jpg";
-        $image->alt = "alt for id $id";
-        $image->cssClass = "img img-thumbnail";
-
-        return $image;
+        return [
+            'src' => "product_mini_$id.jpg",
+            'alt' => "alt for id $id",
+            'cssClass' => "img img-thumbnail"
+        ];
     }
 }

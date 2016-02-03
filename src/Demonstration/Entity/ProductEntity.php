@@ -38,7 +38,7 @@ use Tools;
 
 class ProductEntity implements EntityInterface
 {
-    public static function create(array $values)
+    public static function create(array $values, $assetsPath)
     {
         $language = Context::getContext()->language;
         $shop = Context::getContext()->shop;
@@ -60,7 +60,7 @@ class ProductEntity implements EntityInterface
 
         if($product->save()) {
             if(isset($values['images'])) {
-                self::manageImages($product, $values['images']);
+                self::manageImages($product, $values['images'], $assetsPath.'/img/');
             }
 
             return  [
@@ -80,30 +80,34 @@ class ProductEntity implements EntityInterface
      * - an `cssClass` property refers to `css` HTML attribute
      *
      * @param $images stdClass[] a collection of Images from configuration
+     * @param $imgPath define folder where images should be found
      */
-    public static function manageImages(Product $product, $images)
+    public static function manageImages(Product $product, $images, $imgPath)
     {
         foreach($images as $imageObject) {
-            self::createAndUploadImage($product->id, $imageObject, $product->id_shop_default);
+            self::createAndUploadImage($product, $imageObject, $product->id_shop_default, $imgPath);
         }
     }
 
-    private static function createAndUploadImage($productId, array $imageArray, $shopId, $imgPath = __DIR__ . '/../../../assets/img/')
+    private static function createAndUploadImage($product, array $imageArray, $shopId, $imgPath)
     {
         $image = new Image();
-        $image->id_product = $productId;
-        $image->position = Image::getHighestPosition($productId) + 1;
+        $image->id_product = $product->id;
+        $image->position = Image::getHighestPosition($product->id) + 1;
         $image->legend = $imageArray['alt'];
 
         $image->save();
 
         ImageUploader::upload(
-            $productId,
+            $product->id,
             $image->id,
             $imgPath.$imageArray['src'],
             'products',
             true,
             $shopId
         );
+
+        $product->image = $image;
+        $product->update();
     }
 }

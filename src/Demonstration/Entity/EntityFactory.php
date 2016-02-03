@@ -27,11 +27,11 @@ namespace PrestaShop\Demonstration\Entity;
 
 class EntityFactory
 {
-    public static function createFromValues($category, array $values)
+    public static function createFromValues($category, array $values, $assetsPath = __DIR__ . '/../../../assets/')
     {
         switch ($category) {
             case 'products':
-                $entity = ProductEntity::create($values);
+                $entity = ProductEntity::create($values, $assetsPath);
             break;
             default:
                 return;
