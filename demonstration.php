@@ -63,7 +63,9 @@ class demonstration extends Module
     public function install()
     {
         parent::install();
-        return Installer::createModuleDatabase() && Installer::addDemoAssets();
+        $installationStatus = Installer::createModuleDatabase() && Installer::addDemoAssets();
+
+        return $installationStatus;
     }
 
     public function uninstall()

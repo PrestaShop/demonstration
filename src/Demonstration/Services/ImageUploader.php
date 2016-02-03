@@ -50,75 +50,76 @@ class ImageUploader
     {
         $tempFile = tempnam(_PS_TMP_IMG_DIR_, 'ps_import');
 
-        switch ($type) {
-            default:
-            case 'products':
-                $image_obj = new Image($imageId);
-                $path = $image_obj->getPathForCreation();
-                break;
-        }
-
         if(Tools::copy($imagePath, $tempFile)) {
-            $tgt_width = $tgt_height = 0;
-            $src_width = $src_height = 0;
-            $error = 0;
-            ImageManager::resize($tempFile, $imagePath, null, null, 'jpg', false, $error, $tgt_width, $tgt_height, 5, $src_width, $src_height);
-            $images_types = ImageType::getImagesTypes($type, true);
+            $targetWidth = $targetHeight = $srcWidth = $srcHeight = $error = 0;
+
+            ImageManager::resize($tempFile, $imagePath, null, null, 'jpg', false, $error, $targetWidth, $targetHeight, 5, $srcWidth, $srcHeight);
 
             if ($regenerate) {
-                $previous_path = null;
-                $path_infos = array();
-                $path_infos[] = array($tgt_width, $tgt_height, $path.'.jpg');
+                switch ($type) {
+                    default:
+                    case 'products':
+                        $imageObj = new Image($imageId);
+                        $imageObjPath = $imageObj->getPathForCreation();
+                        break;
+                }
 
-                foreach ($images_types as $image_type) {
-                    $path = self::getBestPath($image_type['width'], $image_type['height'], $path_infos);
+                $pathData[] = [$targetWidth, $targetHeight, $imageObjPath.'.jpg'];
+                $imagesTypes = ImageType::getImagesTypes($type, true);
+
+                foreach ($imagesTypes as $imageType) {
+                    $bestPath = self::getBestPath($imageType, $pathData);
 
                     if (ImageManager::resize(
                         $tempFile,
-                        $path.'-'.stripslashes($image_type['name']).'.jpg',
-                        $image_type['width'],
-                        $image_type['height'],
+                        $bestPath,
+                        $imageType['width'],
+                        $imageType['height'],
                         'jpg',
                         false,
                         $error,
-                        $tgt_width,
-                        $tgt_height,
+                        $targetWidth,
+                        $targetHeight,
                         5,
-                        $src_width,
-                        $src_height
+                        $srcWidth,
+                        $srcHeight
                     )) {
                         // the last image should not be added in the candidate list if it's bigger than the original image
-                        if ($tgt_width <= $src_width && $tgt_height <= $src_height) {
-                            $path_infos[] = array($tgt_width, $tgt_height, $path.'-'.stripslashes($image_type['name']).'.jpg');
+                        if ($targetWidth <= $srcWidth && $targetHeight <= $srcHeight) {
+                            $pathData[] = array($targetWidth, $targetHeight, $bestPath);
                         }
                         if ($type == 'products') {
-                            if (is_file(_PS_TMP_IMG_DIR_.'product_mini_'.(int)$entityId.'.jpg')) {
-                                unlink(_PS_TMP_IMG_DIR_.'product_mini_'.(int)$entityId.'.jpg');
+                            if (is_file(_PS_TMP_IMG_DIR_.'product_mini_'.$entityId.'.jpg')) {
+                                unlink(_PS_TMP_IMG_DIR_.'product_mini_'.$entityId.'.jpg');
                             }
-                            if (is_file(_PS_TMP_IMG_DIR_.'product_mini_'.(int)$entityId.'_'.(int)$shopId.'.jpg')) {
-                                unlink(_PS_TMP_IMG_DIR_.'product_mini_'.(int)$entityId.'_'.(int)$shopId.'.jpg');
+                            if (is_file(_PS_TMP_IMG_DIR_.'product_mini_'.$entityId.'_'.$shopId.'.jpg')) {
+                                unlink(_PS_TMP_IMG_DIR_.'product_mini_'.$entityId.'_'.$shopId.'.jpg');
                             }
                         }
+                    }else {
+                        throw new PrestaShopException(sprintf('[ImageUploader] unexpected error when regenerating %s into %s', $tempFile, $bestPath));
                     }
                 }
             }
         }else {
             throw new PrestaShopException(sprintf('[ImageUploader] unexpected error when copying %s to %s', $tempFile, $imagePath));
         }
-
         return true;
     }
 
-    protected static function getBestPath($tgt_width, $tgt_height, $path_infos)
+    protected static function getBestPath(array $imageType, array $pathData)
     {
-        $pathInfos = array_reverse($path_infos);
+        $targetWidth = $imageType['width'];
+        $targetHeight = $imageType['height'];
+        $targetName = $imageType['name'];
         $path = '';
-        foreach ($pathInfos as $path_info) {
-            list($width, $height, $path) = $path_info;
-            if ($width >= $tgt_width && $height >= $tgt_height) {
-                return $path;
+        $completePath = '-'.stripslashes($targetName).'.jpg';
+        foreach (array_reverse($pathData) as $pathInfo) {
+            list($width, $height, $path) = $pathInfo;
+            if ($width >= $targetWidth && $height >= $targetHeight) {
+                return "{$path}{$completePath}";
             }
         }
-        return $path;
+        return "{$path}{$completePath}";
     }
 }
