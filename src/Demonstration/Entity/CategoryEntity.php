@@ -40,8 +40,10 @@ class CategoryEntity implements EntityInterface
     public static function create(array $values, $assetsPath)
     {
         $language = Context::getContext()->language;
-        $category = new Category(null, false, $language->id);
+        $shop = Context::getContext()->shop;
+        $defaultCategoryId = $shop->getCategory();
 
+        $category = new Category(null, false, $language->id);
         foreach ($values as $property => $value) {
             if (property_exists('Category', $property)) {
                 $category->{$property} = $value;
@@ -50,6 +52,13 @@ class CategoryEntity implements EntityInterface
 
         $category->active = 1;
         $category->link_rewrite = Tools::link_rewrite($category->name);
+        $category->id_shop_default = $shop->id;
+        $category->id_parent = $defaultCategoryId;
+        $category->regenerateEntireNtree();
+
+        if (isset($values['ps_id'])) {
+
+        }
 
         if ($category->save()) {
             if (isset($values['images'])) {
@@ -60,6 +69,7 @@ class CategoryEntity implements EntityInterface
                 'id' => $category->id,
                 'table_name' => 'product',
                 'id_name' => 'id_product',
+                'fixture_id' => $values['ps_id'],
             ];
         }
 

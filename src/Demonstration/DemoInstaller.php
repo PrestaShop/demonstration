@@ -68,6 +68,7 @@ final class DemoInstaller
             `table_name` varchar(20) NOT NULL,
             `id_name` varchar(20) NOT NULL,
             `id` text NOT NULL,
+            `fixture_id` text NULL,
             PRIMARY KEY  (`id_demonstration`)
         ) ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8;';
 

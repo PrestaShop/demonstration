@@ -64,9 +64,35 @@ class EntityFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('array', $returnProperties);
         $this->assertTrue(Category::existsInDatabase($returnProperties['id'], $returnProperties['table_name']));
 
-        $product = new \Category($returnProperties['id']);
-        $product->deleteImage();
-        $product->delete();
+        $category = new Category($returnProperties['id']);
+        $category->deleteImage();
+        $category->delete();
+    }
+
+    public function testCreateFromValuesWithCategories()
+    {
+        /* create Parent category */
+        $fixturesImgPath = __DIR__.'/../fixtures/assets/';
+        $returnProperties = EntityFactory::createFromValues('categories', $this->fakeCategoryData(), $fixturesImgPath);
+
+        $this->assertInternalType('array', $returnProperties);
+        $this->assertTrue(Category::existsInDatabase($returnProperties['id'], $returnProperties['table_name']));
+
+        $parentCategory = new Category($returnProperties['id']);
+
+
+        /* create children category */
+        $returnProperties2 = EntityFactory::createFromValues('categories', $this->fakeCategoryChildData(), $fixturesImgPath);
+        $this->assertInternalType('array', $returnProperties2);
+        $this->assertTrue(Category::existsInDatabase($returnProperties2['id'], $returnProperties2['table_name']));
+
+        $childCategory = new \Category($returnProperties['id']);
+        $this->assertInstanceOf('Category', $parentCategory, sprintf(self::NOTICE.' Category creation fails: expected Category, received %', gettype($childCategory)));
+
+        $children = $parentCategory->getAllChildren();
+
+        $this->assertCount(1, $children, sprintf(self::NOTICE.' Category creation fails: expected 1 child, received %', count($children)));
+        $parentCategory->delete();
     }
 
     private function fakeProductData()
@@ -80,7 +106,22 @@ class EntityFactoryTest extends \PHPUnit_Framework_TestCase
     private function fakeCategoryData()
     {
         return [
-            'ps_id' => 1,
+            'ps_id' => '1',
+            'name' => 'Category 1',
+            'position' => 1,
+            'description' => 'Category description 1',
+            'image' => [
+                'src' => 'category_1.jpg',
+                'alt' => 'category alt 1',
+                'cssClass' => 'cat cat-thumbnail',
+            ],
+        ];
+    }
+
+    private function fakeCategoryChildData()
+    {
+        return [
+            'ps_id' => '1_1',
             'name' => 'Category 1',
             'position' => 1,
             'description' => 'Category description 1',
