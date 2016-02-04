@@ -98,6 +98,9 @@ class EntityFactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(2, $nbParents, sprintf(self::NOTICE.' Category creation fails: expected 2 parents (root & fixture one), received %', $nbParents));
         $parentCategory->delete();
+
+        /* and remove entry from demonstration table */
+        Db::getInstance()->execute('DELETE FROM `'._DB_PREFIX_.'demonstration` WHERE id ='. $parentCategory->id);
     }
 
     private function fakeProductData()
