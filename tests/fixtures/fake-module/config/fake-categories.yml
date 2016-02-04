@@ -12,7 +12,8 @@ categories:
     description: "Category description 2"
     image: {src:"category_2.jpg", alt:"", cssClass:"cat cat-thumbnail"}
   -
-    ps_id: "2_1"
+    ps_id: "3"
+    ps_parent: "1"
     name: "Category 2 > 1"
     position: 1
     description: "Category description 2 > 1"

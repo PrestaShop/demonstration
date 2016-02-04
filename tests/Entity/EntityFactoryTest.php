@@ -29,6 +29,8 @@ namespace PrestaShop\Demonstration\Test\Entity;
 
 use PrestaShop\Demonstration\Entity\EntityFactory;
 use Category;
+use Context;
+use Db;
 use Product;
 
 class EntityFactoryTest extends \PHPUnit_Framework_TestCase
@@ -78,6 +80,9 @@ class EntityFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('array', $returnProperties);
         $this->assertTrue(Category::existsInDatabase($returnProperties['id'], $returnProperties['table_name']));
 
+        /* obviously, populate the demonstration table */
+        Db::getInstance()->insert('demonstration', $returnProperties);
+
         $parentCategory = new Category($returnProperties['id']);
 
 
@@ -86,12 +91,12 @@ class EntityFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('array', $returnProperties2);
         $this->assertTrue(Category::existsInDatabase($returnProperties2['id'], $returnProperties2['table_name']));
 
-        $childCategory = new \Category($returnProperties['id']);
+        $childCategory = new Category($returnProperties['id']);
         $this->assertInstanceOf('Category', $parentCategory, sprintf(self::NOTICE.' Category creation fails: expected Category, received %', gettype($childCategory)));
 
-        $children = $parentCategory->getAllChildren();
+        $nbParents = count($childCategory->getAllParents());
 
-        $this->assertCount(1, $children, sprintf(self::NOTICE.' Category creation fails: expected 1 child, received %', count($children)));
+        $this->assertSame(2, $nbParents, sprintf(self::NOTICE.' Category creation fails: expected 2 parents (root & fixture one), received %', $nbParents));
         $parentCategory->delete();
     }
 
@@ -121,13 +126,14 @@ class EntityFactoryTest extends \PHPUnit_Framework_TestCase
     private function fakeCategoryChildData()
     {
         return [
-            'ps_id' => '1_1',
-            'name' => 'Category 1',
+            'ps_id' => '2',
+            'ps_parent' => '1',
+            'name' => 'Category 1_1',
             'position' => 1,
-            'description' => 'Category description 1',
+            'description' => 'Category description 1_1',
             'image' => [
-                'src' => 'category_1.jpg',
-                'alt' => 'category alt 1',
+                'src' => 'category_1_1.jpg',
+                'alt' => 'category alt 1_1',
                 'cssClass' => 'cat cat-thumbnail',
             ],
         ];

@@ -27,6 +27,7 @@
 namespace PrestaShop\Demonstration\Entity;
 
 use PrestaShop\Demonstration\Contract\EntityInterface;
+use PrestaShop\Demonstration\Helper\FixtureTrait;
 use PrestaShop\Demonstration\Service\ImageUploader;
 use Context;
 use Configuration;
@@ -37,6 +38,8 @@ use Tools;
 
 class CategoryEntity implements EntityInterface
 {
+    use FixtureTrait;
+
     public static function create(array $values, $assetsPath)
     {
         $language = Context::getContext()->language;
@@ -54,11 +57,15 @@ class CategoryEntity implements EntityInterface
         $category->link_rewrite = Tools::link_rewrite($category->name);
         $category->id_shop_default = $shop->id;
         $category->id_parent = $defaultCategoryId;
-        $category->regenerateEntireNtree();
 
-        if (isset($values['ps_id'])) {
+        if (isset($values['ps_parent'])) {
+            /* get the category parent id */
+            $fixture = FixtureTrait::getFixture($values['ps_parent']);
 
+            $category->id_parent = (int) $fixture->idValue;
         }
+
+        $category->regenerateEntireNtree();
 
         if ($category->save()) {
             if (isset($values['images'])) {
@@ -67,8 +74,8 @@ class CategoryEntity implements EntityInterface
 
             return  [
                 'id' => $category->id,
-                'table_name' => 'product',
-                'id_name' => 'id_product',
+                'table_name' => 'category',
+                'id_name' => 'id_category',
                 'fixture_id' => $values['ps_id'],
             ];
         }
