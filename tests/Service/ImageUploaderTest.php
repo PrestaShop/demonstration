@@ -1,6 +1,6 @@
 <?php
 
-namespace PrestaShop\Demonstration\Test\Loader;
+namespace PrestaShop\Demonstration\Test\Service;
 
 /*
  * 2007-2015 PrestaShop.
@@ -35,7 +35,7 @@ class ImageUploaderTest extends \PHPUnit_Framework_TestCase
 
     public function getBestPath(array $imageType, array $pathData)
     {
-        $method = new \ReflectionMethod('\PrestaShop\Demonstration\Services\ImageUploader', 'getBestPath');
+        $method = new \ReflectionMethod('\PrestaShop\Demonstration\Service\ImageUploader', 'getBestPath');
         $method->setAccessible(true);
 
         return $method->invokeArgs(null, [$imageType, $pathData]);

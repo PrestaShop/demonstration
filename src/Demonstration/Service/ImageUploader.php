@@ -24,7 +24,7 @@
  *  International Registered Trademark & Property of PrestaShop SA
  */
 
-namespace PrestaShop\Demonstration\Services;
+namespace PrestaShop\Demonstration\Service;
 
 use Image;
 use ImageManager;

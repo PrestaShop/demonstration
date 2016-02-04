@@ -27,7 +27,7 @@
 namespace PrestaShop\Demonstration\Entity;
 
 use PrestaShop\Demonstration\Contract\EntityInterface;
-use PrestaShop\Demonstration\Services\ImageUploader;
+use PrestaShop\Demonstration\Service\ImageUploader;
 use Context;
 use Configuration;
 use Image;
