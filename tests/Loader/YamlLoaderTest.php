@@ -1,6 +1,8 @@
 <?php
+
 namespace PrestaShop\Demonstration\Test\Loader;
-/**
+
+/*
  * 2007-2015 PrestaShop.
  *
  * NOTICE OF LICENSE
@@ -28,9 +30,9 @@ namespace PrestaShop\Demonstration\Test\Loader;
 use PrestaShop\Demonstration\Loader\YamlLoader;
 use Symfony\Component\Config\FileLocator;
 
-class YamLoaderTest extends \PHPUnit_Framework_TestCase
+class YamlLoaderTest extends \PHPUnit_Framework_TestCase
 {
-    const NOTICE = "[Config loading]";
+    const NOTICE = '[Config loading]';
 
     /* @var $loader YamlLoader */
     private $loader;
@@ -65,15 +67,15 @@ class YamLoaderTest extends \PHPUnit_Framework_TestCase
         $method->setAccessible(true);
 
         $this->configPath = __DIR__.'/../fixtures/fake-module/';
-        $this->locator    = new FileLocator($this->configPath);
-        $this->loader     = new YamlLoader($this->locator);
+        $this->locator = new FileLocator($this->configPath);
+        $this->loader = new YamlLoader($this->locator);
     }
 
     protected function tearDown()
     {
         $this->configPath = null;
-        $this->locator    = null;
-        $this->loader     = null;
+        $this->locator = null;
+        $this->loader = null;
     }
 
     /**
@@ -90,14 +92,13 @@ class YamLoaderTest extends \PHPUnit_Framework_TestCase
      * - RuntimeException if Config component is not installed (wont be tested)
      * - InvalidArgumentException if file does not exits in local folder
      * - InvalidArgumentException if file have an unexpected file extension
-     * - InvalidArgumentException if the YAML is invalid
+     * - InvalidArgumentException if the YAML is invalid.
      */
-
     public function testLoadFile()
     {
         $validConfig = $this->loadFile($this->configPath.'config/config.yml');
         $this->assertInternalType('array', $validConfig);
-        $this->assertNotEmpty($validConfig, self::NOTICE . "this configuration can't be empty");
+        $this->assertNotEmpty($validConfig, self::NOTICE."this configuration can't be empty");
     }
 
     /**

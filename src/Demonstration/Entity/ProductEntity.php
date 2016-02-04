@@ -23,17 +23,16 @@
  *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  *  International Registered Trademark & Property of PrestaShop SA
  */
+
 namespace PrestaShop\Demonstration\Entity;
 
 use PrestaShop\Demonstration\Contract\EntityInterface;
 use PrestaShop\Demonstration\Services\ImageUploader;
-
 use Context;
 use Configuration;
 use Image;
 use Product;
 use Tools;
-
 
 class ProductEntity implements EntityInterface
 {
@@ -56,9 +55,8 @@ class ProductEntity implements EntityInterface
         $product->id_category_default = $defaultCategoryId;
         $product->active = 1;
 
-
-        if($product->save()) {
-            if(isset($values['images'])) {
+        if ($product->save()) {
+            if (isset($values['images'])) {
                 self::manageImages($product, $values['images'], $assetsPath.'/img/');
             }
 
@@ -77,13 +75,12 @@ class ProductEntity implements EntityInterface
      * - an `src` property used to move images from modules to Product images folder
      * - an `alt` property refers to HTML attribute
      * - an `cssClass` property refers to `css` HTML attribute
-     *
      * @param $images stdClass[] a collection of Images from configuration
      * @param $imgPath define folder where images should be found
      */
     public static function manageImages(Product $product, $images, $imgPath)
     {
-        foreach($images as $imageObject) {
+        foreach ($images as $imageObject) {
             self::createAndUploadImage($product, $imageObject, $product->id_shop_default, $imgPath);
         }
     }

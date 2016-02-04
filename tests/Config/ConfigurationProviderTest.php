@@ -1,6 +1,8 @@
 <?php
+
 namespace PrestaShop\Demonstration\Test\Config;
-/**
+
+/*
  * 2007-2015 PrestaShop.
  *
  * NOTICE OF LICENSE
@@ -29,7 +31,7 @@ use PrestaShop\Demonstration\Config\ConfigurationProvider;
 
 class ConfigurationProviderTest extends \PHPUnit_Framework_TestCase
 {
-    const NOTICE = "[Config parsing]";
+    const NOTICE = '[Config parsing]';
 
     /* @var $provider ConfigurationProvider */
     private $provider;
@@ -58,21 +60,21 @@ class ConfigurationProviderTest extends \PHPUnit_Framework_TestCase
     public function testProcessFromPath()
     {
         $config = $this->provider->processFromPath(__DIR__.'/../fixtures/fake-module/config/', 'config.yml');
-        $this->assertInternalType('array', $config, self::NOTICE." ConfigProvider::processFrom Path MUST return an array");
+        $this->assertInternalType('array', $config, self::NOTICE.' ConfigProvider::processFrom Path MUST return an array');
 
         $expectedSections = ['products', 'users', 'foo'];
-        foreach($expectedSections as $section) {
-            $this->assertArrayHasKey($section, $config, sprintf(self::NOTICE." The expected key %s is missing from the parsed configuration", $section));
+        foreach ($expectedSections as $section) {
+            $this->assertArrayHasKey($section, $config, sprintf(self::NOTICE.' The expected key %s is missing from the parsed configuration', $section));
         }
 
         $products = $config['products'];
-        $this->assertTrue(count($products) == 7, sprintf(self::NOTICE." The number of expected products is wrong: 7 expected, got %s.", count($products)));
+        $this->assertTrue(count($products) == 7, sprintf(self::NOTICE.' The number of expected products is wrong: 7 expected, got %s.', count($products)));
 
         $users = $config['users'];
-        $this->assertTrue(count($users) == 4, sprintf(self::NOTICE." The number of expected products is wrong: 4 expected, got %s.", count($users)));
+        $this->assertTrue(count($users) == 4, sprintf(self::NOTICE.' The number of expected products is wrong: 4 expected, got %s.', count($users)));
 
         $foo = $config['foo'];
-        $this->assertTrue(count($foo) == 1, sprintf(self::NOTICE." The number of expected products is wrong: 1 expected, got %s.", count($foo)));
+        $this->assertTrue(count($foo) == 1, sprintf(self::NOTICE.' The number of expected products is wrong: 1 expected, got %s.', count($foo)));
     }
 
     /**

@@ -23,11 +23,12 @@
  *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  *  International Registered Trademark & Property of PrestaShop SA
  */
+
 namespace PrestaShop\Demonstration\Entity;
 
 class EntityFactory
 {
-    public static function createFromValues($category, array $values, $assetsPath = __DIR__ . '/../../../assets/')
+    public static function createFromValues($category, array $values, $assetsPath = __DIR__.'/../../../assets/')
     {
         switch ($category) {
             case 'products':

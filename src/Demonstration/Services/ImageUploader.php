@@ -23,6 +23,7 @@
  *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  *  International Registered Trademark & Property of PrestaShop SA
  */
+
 namespace PrestaShop\Demonstration\Services;
 
 use Image;
@@ -37,20 +38,22 @@ class ImageUploader
      * Upload an image located in $url and save it in a path
      * according to $entity->id_{entity}.
      *
-     * @param int $entityId id of product or category (set in entity)
-     * @param int $imageId (default null) id of the image.
-     * @param string $imagePath path or url to use
-     * @param string $type 'products' or 'categories'
-     * @param bool $regenerate
-     * @param int $shopId the shopId
+     * @param int    $entityId   id of product or category (set in entity)
+     * @param int    $imageId    (default null) id of the image.
+     * @param string $imagePath  path or url to use
+     * @param string $type       'products' or 'categories'
+     * @param bool   $regenerate
+     * @param int    $shopId     the shopId
+     *
      * @return bool|PrestaShopException true or exception in case of failure
+     *
      * @throws PrestaShopException
      */
     public static function upload($entityId, $imageId = null, $imagePath = '', $type = 'products', $regenerate = true, $shopId)
     {
         $tempFile = tempnam(_PS_TMP_IMG_DIR_, 'ps_import');
 
-        if(Tools::copy($imagePath, $tempFile)) {
+        if (Tools::copy($imagePath, $tempFile)) {
             $targetWidth = $targetHeight = $srcWidth = $srcHeight = $error = 0;
 
             ImageManager::resize($tempFile, $imagePath, null, null, 'jpg', false, $error, $targetWidth, $targetHeight, 5, $srcWidth, $srcHeight);
@@ -96,14 +99,15 @@ class ImageUploader
                                 unlink(_PS_TMP_IMG_DIR_.'product_mini_'.$entityId.'_'.$shopId.'.jpg');
                             }
                         }
-                    }else {
+                    } else {
                         throw new PrestaShopException(sprintf('[ImageUploader] unexpected error when regenerating %s into %s', $tempFile, $bestPath));
                     }
                 }
             }
-        }else {
+        } else {
             throw new PrestaShopException(sprintf('[ImageUploader] unexpected error when copying %s to %s', $tempFile, $imagePath));
         }
+
         return true;
     }
 
@@ -120,6 +124,7 @@ class ImageUploader
                 return "{$path}{$completePath}";
             }
         }
+
         return "{$path}{$completePath}";
     }
 }

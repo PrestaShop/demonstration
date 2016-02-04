@@ -23,6 +23,7 @@
  *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  *  International Registered Trademark & Property of PrestaShop SA
  */
+
 namespace PrestaShop\Demonstration\Contract;
 
 interface EntityInterface
@@ -30,6 +31,7 @@ interface EntityInterface
     /**
      * @param array $values Product properties (can be strings, scalars, booleans)
      * @param $assetPath Define the folder when we should manipulate files like images or attachments
+     *
      * @return \Object
      */
     public static function create(array $values, $assetPath);

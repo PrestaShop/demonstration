@@ -1,6 +1,8 @@
 <?php
+
 namespace PrestaShop\Demonstration\Test\Loader;
-/**
+
+/*
  * 2007-2015 PrestaShop.
  *
  * NOTICE OF LICENSE
@@ -29,7 +31,7 @@ use ImageType;
 
 class ImageUploaderTest extends \PHPUnit_Framework_TestCase
 {
-    const NOTICE = "[Image uploader]";
+    const NOTICE = '[Image uploader]';
 
     public function getBestPath(array $imageType, array $pathData)
     {
@@ -46,11 +48,11 @@ class ImageUploaderTest extends \PHPUnit_Framework_TestCase
             0 => [
                 0 => 800,
                 1 => 800,
-                2 => __DIR__.'/../fixtures/assets/moved-img/195'
-            ]
+                2 => __DIR__.'/../fixtures/assets/moved-img/195',
+            ],
         ];
 
-        foreach($imageTypes as $imageType) {
+        foreach ($imageTypes as $imageType) {
             $actual = $this->getBestPath($imageType, $pathData);
             $expected = $pathData[0][2].'-'.$imageType['name'].'.jpg';
             $this->assertSame($actual,

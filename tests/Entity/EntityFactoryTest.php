@@ -1,6 +1,8 @@
 <?php
+
 namespace PrestaShop\Demonstration\Test\Entity;
-/**
+
+/*
  * 2007-2015 PrestaShop.
  *
  * NOTICE OF LICENSE
@@ -31,7 +33,7 @@ use Product;
 
 class EntityFactoryTest extends \PHPUnit_Framework_TestCase
 {
-    const NOTICE = "[Factory]";
+    const NOTICE = '[Factory]';
 
     public function testCreateFromValuesNonManaged()
     {
@@ -71,7 +73,7 @@ class EntityFactoryTest extends \PHPUnit_Framework_TestCase
     {
         return [
             'name' => 'new product',
-            'images' => [$this->fakeImageData(1), $this->fakeImageData(2)]
+            'images' => [$this->fakeImageData(1), $this->fakeImageData(2)],
         ];
     }
 
@@ -85,8 +87,8 @@ class EntityFactoryTest extends \PHPUnit_Framework_TestCase
             'image' => [
                 'src' => 'category_1.jpg',
                 'alt' => 'category alt 1',
-                'cssClass' => 'cat cat-thumbnail'
-            ]
+                'cssClass' => 'cat cat-thumbnail',
+            ],
         ];
     }
 
@@ -95,7 +97,7 @@ class EntityFactoryTest extends \PHPUnit_Framework_TestCase
         return [
             'src' => "product_mini_$id.jpg",
             'alt' => "alt for id $id",
-            'cssClass' => "img img-thumbnail"
+            'cssClass' => 'img img-thumbnail',
         ];
     }
 }
